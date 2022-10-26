@@ -21,8 +21,8 @@ if you have any errors try pip3 instead.
   ```
 
 ## TO-DO
-Blacklist computer drives so it only shows USB devices on linux
-The size of the usb device shown is currently only the used space not the total space.
+Blacklist computer drives so it only shows USB devices on linux.  
+The size of the usb device shown is currently only the used space not the total space.  
 
 ### Current known issues
 python crashing after device is ejected,  
