@@ -3,8 +3,8 @@
 ## Quick start
 
 This is a USB ejector GUI, made for Windows, Linux and Mac.
-It detects the usb devices so you only have to click under the name of the device to eject it.
-I have made sure that on mac it does not detect the Macintosh HD and Time Machine Backups.
+It detects the USB devices so you only have to click under the name of the device to eject it.
+I have made sure that on Mac it does not detect the Macintosh HD and Time Machine Backups.
 
 ### Prerequisites
 
@@ -19,8 +19,11 @@ if you have any errors try pip3 instead.
   ```sh
   pip3 install PyQt5
   ```
-### current known issues
+
+## TO-DO
+Blacklist computer drives so it only shows USB devices on linux
+The size of the usb device shown is currently only the used space not the total space.
+
+### Current known issues
 python crashing after device is ejected,  
 ie. only one device can be ejected before having to restart the program.  
-No user readable name on device on linux (name of the device on linux is sdb).  
-The size of the usb device shown is currently only the used space not the total space.
