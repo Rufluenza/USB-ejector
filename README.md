@@ -1,6 +1,6 @@
 
 <!-- USB Ejector -->
-## Getting Started
+## Quick start
 
 This is a USB ejector GUI, made for Windows, Linux and Mac
 it detects the usb devices so you only have to click under the name of the device to eject it.
