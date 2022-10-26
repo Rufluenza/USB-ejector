@@ -14,8 +14,8 @@ To download it open terminal and type in:
   ```sh
   pip install PyQt5
   ```
-  if you have any errors try pip3 instead
-  * Terminal
-  ```sh
-  pip3 install PyQt5
-  ```
+ if you have any errors try pip3 instead
+ * Terminal
+ ```sh
+ pip3 install PyQt5
+ ```
