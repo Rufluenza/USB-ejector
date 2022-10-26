@@ -19,3 +19,8 @@ if you have any errors try pip3 instead
   ```sh
   pip3 install PyQt5
   ```
+### current known issues
+*python crashing after device is ejected, 
+- ie. only one device can be ejected before having to restart the program
+*No user readable name on device on linux (name of the device on linux is sdb)
+*The size of the usb device shown is currently only the used space not the total space
