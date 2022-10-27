@@ -58,10 +58,10 @@ class Gui(QWidget):
         return box
 
     def eject_usb(self, usb):
-        confirm = QMessageBox.question(self, 'Confirm', 'Are you sure you want to eject '+usb[0]+'?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        confirm = QMessageBox.question(self, 'Confirm', 'Are you sure you want to eject '+usb[0]+'?', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if confirm == QMessageBox.Yes:
             if platform.system() == 'Linux':
-                os.system('umount '+usb[1])
+                os.system('eject '+usb[1])
             elif platform.system() == 'Windows':
                 os.system('eject '+usb[1])
             elif platform.system() == 'Darwin':
