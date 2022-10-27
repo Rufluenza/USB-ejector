@@ -40,7 +40,5 @@ And the python script in Downloads
 ## TO-DO
 The size of the usb device shown is currently only the used space not the total space.  
 Change the user script to find the python program by itself. So it is more user friendly.  
+After ejecting a device the program should remove the box.  
 
-### Current known issues
-python crashing after device is ejected,  
-ie. only one device can be ejected before having to restart the program.  
