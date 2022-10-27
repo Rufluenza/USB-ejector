@@ -10,7 +10,7 @@ I have made sure that on Mac it does not detect the Macintosh HD and Time Machin
 If you want the program to ignore your system drives, put the drive name in the blacklist.txt file.  
 You need to type each drive out on a new line.  
 Example:  
-sdd
+sdd  
 nvme
 
 
