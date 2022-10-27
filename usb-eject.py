@@ -42,15 +42,16 @@ class Gui(QWidget):
     def make_usb_box(self, usb):
         box = QWidget()
         box_layout = QVBoxLayout()
-
+        
         name = QLabel(usb[0])
-        size = QLabel(str(os.path.getsize(usb[1])))
-        size.setText('{:.2f} MB'.format(int(size_used.text())/1024/1024))
+        size_used = QLabel(str(os.path.getsize(usb[1])))
 
+        # convert size_used to human readable format
+        size_used.setText('{:.2f} MB'.format(int(size_used.text())/1024/1024))
         eject_button = QPushButton('Eject')
 
         box_layout.addWidget(name)
-        box_layout.addWidget(size)
+        box_layout.addWidget(size_used)
         box_layout.addWidget(eject_button)
 
         box.setLayout(box_layout)
@@ -71,8 +72,10 @@ class Gui(QWidget):
             QMessageBox.information(self, 'Success', usb[0]+' ejected successfully!')
             self.layout.removeWidget(self.make_usb_box(usb))
             self.usb_list.remove(usb)
-        else:
+        elif confirm == QMessageBox.No:
             QMessageBox.information(self, 'Cancelled', usb[0]+' not ejected.')
+        else:
+            QMessageBox.critical(self, 'Error', 'An error occured while ejecting '+usb[0]+'.')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
