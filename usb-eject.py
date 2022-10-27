@@ -45,6 +45,8 @@ class Gui(QWidget):
 
         name = QLabel(usb[0])
         size = QLabel(str(os.path.getsize(usb[1])))
+        size.setText('{:.2f} MB'.format(int(size_used.text())/1024/1024))
+
         eject_button = QPushButton('Eject')
 
         box_layout.addWidget(name)
