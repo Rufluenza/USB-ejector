@@ -4,7 +4,7 @@ import platform
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QMessageBox
 from PyQt5.QtGui import QFont
 
-
+removed_usb = []
 class Gui(QWidget):
 
     def __init__(self):
@@ -29,7 +29,13 @@ class Gui(QWidget):
         if platform.system() == 'Linux':
             for device in os.listdir('/dev'):
                 if device.startswith('sd'):
-                    devices.append((device, '/dev/'+device))
+                    # if device is not in blacklist.txt then add it to devices list
+                    read_blacklist = open('blacklist.txt', 'r')
+                    blacklist = read_blacklist.readlines()
+                    read_blacklist.close()
+                    if device not in blacklist:
+                        devices.append((device, '/dev/'+device))
+                    #devices.append((device, '/dev/'+device))
         elif platform.system() == 'Windows':
             for device in os.listdir('/media'):
                 devices.append((device, '/media/'+device))
@@ -40,38 +46,61 @@ class Gui(QWidget):
         return devices
 
     def make_usb_box(self, usb):
-        box = QWidget()
-        box_layout = QVBoxLayout()
-        
-        name = QLabel(usb[0])
-        size_used = QLabel(str(os.path.getsize(usb[1])))
+        if usb not in removed_usb:
+            box = QWidget()
+            box_layout = QVBoxLayout()
+            
+            name = QLabel(usb[0])
+            size_used = QLabel(str(os.path.getsize(usb[1])))
 
-        # convert size_used to human readable format
-        size_used.setText('{:.2f} MB'.format(int(size_used.text())/1024/1024))
-        eject_button = QPushButton('Eject')
+            # convert size_used to human readable format
+            size_used.setText('{:.2f} MB'.format(int(size_used.text())/1024/1024))
+            eject_button = QPushButton('Eject')
 
-        box_layout.addWidget(name)
-        box_layout.addWidget(size_used)
-        box_layout.addWidget(eject_button)
+            box_layout.addWidget(name)
+            box_layout.addWidget(size_used)
+            box_layout.addWidget(eject_button)
 
-        box.setLayout(box_layout)
+            box.setLayout(box_layout)
 
-        eject_button.clicked.connect(lambda: self.eject_usb(usb))
+            eject_button.clicked.connect(lambda: self.eject_usb(usb))
+            if usb in removed_usb:
+                box.hide()
+                usb.remove(usb)
 
-        return box
+            return box
+    
+    def update_gui(self):
+        self.layout = QVBoxLayout()
+        for usb in self.usb_list:
+            if usb not in removed_usb:
+                self.layout.addWidget(self.make_usb_box(usb))
+        #self.setLayout(self.layout)
+        self.show()
 
     def eject_usb(self, usb):
         confirm = QMessageBox.question(self, 'Confirm', 'Are you sure you want to eject '+usb[0]+'?', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if confirm == QMessageBox.Yes:
             if platform.system() == 'Linux':
                 os.system('eject '+usb[1])
+                usb.remove(usb)
             elif platform.system() == 'Windows':
                 os.system('eject '+usb[1])
             elif platform.system() == 'Darwin':
                 os.system('diskutil umount '+usb[1])
+
             QMessageBox.information(self, 'Success', usb[0]+' ejected successfully!')
+
+            removed_usb.append(usb)
+            self.update_gui()
+  
+            """
             self.layout.removeWidget(self.make_usb_box(usb))
             self.usb_list.remove(usb)
+            # make_usb_box() again to update the gui
+            self.update_gui()
+            """
+            
         elif confirm == QMessageBox.No:
             QMessageBox.information(self, 'Cancelled', usb[0]+' not ejected.')
         else:
