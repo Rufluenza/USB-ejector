@@ -38,9 +38,8 @@ You will also need to set the usb-eject.sh on your Desktop
 And the python script in Downloads  
 
 ## TO-DO
-Blacklist drives so it only shows USB devices on linux.  
 The size of the usb device shown is currently only the used space not the total space.  
-Change the user script to find the python program by itself.
+Change the user script to find the python program by itself. So it is more user friendly.  
 
 ### Current known issues
 python crashing after device is ejected,  
