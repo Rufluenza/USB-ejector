@@ -19,11 +19,14 @@ if you have any errors try pip3 instead.
   ```sh
   pip3 install PyQt5
   ```
+### Location of scripts
+You will also need to set the usb-eject.sh on you Desktop  
+And the other script in Downloads  
 
 ## TO-DO
 Blacklist drives so it only shows USB devices on linux.  
 The size of the usb device shown is currently only the used space not the total space.  
-Make a shell script runner for the program.  
+Change the user script to find the python program by itself.
 
 ### Current known issues
 python crashing after device is ejected,  
