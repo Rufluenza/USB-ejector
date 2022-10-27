@@ -20,8 +20,8 @@ if you have any errors try pip3 instead.
   pip3 install PyQt5
   ```
 ### Location of scripts
-You will also need to set the usb-eject.sh on you Desktop  
-And the other script in Downloads  
+You will also need to set the usb-eject.sh on your Desktop  
+And the python script in Downloads  
 
 ## TO-DO
 Blacklist drives so it only shows USB devices on linux.  
