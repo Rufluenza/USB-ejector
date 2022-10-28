@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLa
 from PyQt5.QtGui import QFont
 
 removed_usb = []
+
 class Gui(QWidget):
 
     def __init__(self):
@@ -22,6 +23,7 @@ class Gui(QWidget):
             self.layout.addWidget(self.make_usb_box(usb))
 
         self.setLayout(self.layout)
+
         self.show()
 
     def get_usb_devices(self):
@@ -81,6 +83,7 @@ class Gui(QWidget):
     def eject_usb(self, usb):
         confirm = QMessageBox.question(self, 'Confirm', 'Are you sure you want to eject '+usb[0]+'?', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
         if confirm == QMessageBox.Yes:
+            # removed_usb.append(usb)
             if platform.system() == 'Linux':
                 os.system('eject '+usb[1])
                 usb.remove(usb)
@@ -90,16 +93,24 @@ class Gui(QWidget):
                 os.system('diskutil umount '+usb[1])
 
             QMessageBox.information(self, 'Success', usb[0]+' ejected successfully!')
-
-            removed_usb.append(usb)
-            self.update_gui()
-  
-            """
-            self.layout.removeWidget(self.make_usb_box(usb))
-            self.usb_list.remove(usb)
-            # make_usb_box() again to update the gui
-            self.update_gui()
-            """
+            
+            # update the list of usb devices and update the gui
+            # first delete the old list of usb devices
+            del self.usb_list[:]
+            self.usb_list = self.get_usb_devices()
+            # if the usb device is the last one then close the gui
+            if len(self.usb_list) == 0:
+                self.close()
+            else:
+                # remove all widgets from the layout
+                for i in reversed(range(self.layout.count())):
+                    self.layout.itemAt(i).widget().setParent(None)
+                # then call the make_usb_box function to add the new list of usb devices
+                for usb in self.usb_list:
+                    if usb not in removed_usb:
+                        self.layout.addWidget(self.make_usb_box(usb))
+                
+                self.update_gui()
             
         elif confirm == QMessageBox.No:
             QMessageBox.information(self, 'Cancelled', usb[0]+' not ejected.')
