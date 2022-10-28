@@ -1,15 +1,19 @@
 
 <!-- USB Ejector -->
-## Quick start
+## Quick start 2.0
 
-This is a USB ejector GUI, made for Windows, Linux and Mac.
-It detects the USB devices so you only have to click under the name of the device to eject it.
+This is a USB ejector GUI, made for Windows, Linux and Mac.  
+It detects the USB devices so you only have to click under the name of the device to eject it.  
 I have made sure that on Mac it does not detect the Macintosh HD and Time Machine Backups.  
+
+### Whats new?
+Now after ejecting a drive it removes the drive from the list and updates the ui so not to show the ejected drive.  
+It took a long time to fix it but now python does not crash, and everything seems to work as intended.  
 
 ## Blacklist drives  
 If you want the program to ignore your system drives, put the drive name in the blacklist.txt file.  
 You need to type each drive out on a new line.  
-Example:  
+Example of a blacklist.txt file:  
 sdd  
 nvme
 
@@ -38,7 +42,8 @@ You will also need to set the usb-eject.sh on your Desktop
 And the python script in Downloads  
 
 ## TO-DO
+Scaling might be weird after ejecting a drive.  
 The size of the usb device shown is currently only the used space not the total space.  
 Change the user script to find the python program by itself. So it is more user friendly.  
-After ejecting a device the program should remove the box.  
+ 
 
