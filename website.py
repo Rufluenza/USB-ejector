@@ -27,7 +27,7 @@ def main():
             os.system('udisksctl unmount --block-device '+get_usb()[i+1])
             if os.system('udisksctl power-off --block-device '+get_usb()[i+1]) == 0:
                 st.write('Ejected'+ ' ' + get_usb()[i+1].split('/')[-1])
-                st.write('Reload the page to see the changes, currently there is shown an error.\n\n But it has nothing to do with the device media.  ')
+                st.write('Reload the page to see the changes.  ')
                 # refresh the page from the server side
 
     
