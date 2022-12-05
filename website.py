@@ -50,7 +50,7 @@ def main():
                         break
                 print(sd_path)
                 if os.system("udisksctl power-off --block-device "+ sd_path) == 0:
-                    st.write('Ejected'+ ' ' + sd_path)# get_usb()[i+1].split(media_path)[-1])
+                    st.write('Ejected'+ ' ' + sd_path)
                     st.write('Reload the page to see the changes.  ')
             
 
