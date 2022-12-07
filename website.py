@@ -4,20 +4,16 @@ import time
 
 dev = {}
 devs = {}
-media_path = r'/dev/disk/by-label/'
+media_path = r'/media/xmount/'
 
 def get_usb():
     i = 0
-    if os.path.exists(media_path):
-        for dev in os.listdir(media_path):
-            if dev != 'EFI' or dev != 'ESP':
-                i += 1
-                dev = dev.strip(media_path)
-                if " " in dev:
-                    dev = r"'" + dev + r"'"
-                dev = str((dev).replace(' ', r'\x20'))
-                l = media_path+dev
-                devs[i] = l
+    for dev in os.listdir(media_path):
+        i += 1
+        if " " in dev:
+            dev = r"'" + dev + r"'"
+        l = media_path+dev
+        devs[i] = l
 
     return devs
 
@@ -27,34 +23,33 @@ st.subheader("Eject your USB devices")
 def main():
     for i in range(len(get_usb())):
         l = str(i)
-        st.write(get_usb()[i+1].split(media_path)[-1])
+        button_name = get_usb()[i+1].split(media_path)[-1]
+        if "'" in button_name:
+            button_name = button_name.replace("'", '')
+        st.write(button_name)
         st.container()
-        l = st.button('Eject ' + 'Nr. '+l+' ' + get_usb()[i+1].split(media_path)[-1])
+        l = st.button('Eject ' + 'Nr. '+l+' ' + button_name)
         if l:
-            st.write('ejecting'+ ' ' + get_usb()[i+1])
+            st.write('ejecting'+ ' ' + button_name)
             path = get_usb()[i+1]
-            print(path)
-            
-            sd_path = os.popen("udisksctl unmount --block-device "+media_path+"'"+path.split(media_path)[-1]+"'").read()
-            sd_path = str(sd_path)
-            sd_path = sd_path.replace('Unmounted ', '')
-            sd_path = sd_path.replace('.', '')
+            sd_path = os.popen("df -h "+path+" | grep -v 'Filesystem'").read()
+            sd_path = sd_path.split(' ')[0]
             sd_path = sd_path.replace(' ', '')
-            sd_path = sd_path[:-1]
+            sd_path = sd_path.replace('1' or '2' or '3' or '4' or '5' or '6' or '7' or '8' or '9' or '0', '')
+            os.system("udisksctl unmount --block-device "+sd_path)
+            
             for i in range(1, 7):
-                sd_path = sd_path[:-1]+str(i)
+                sd_path = sd_path+str(i)
                 print(sd_path)
-                time.sleep(1)
                 if os.system("udisksctl unmount --block-device "+sd_path) == 0:
                     print('unmounted')
-                    break
+                sd_path = sd_path[:-1]
             print(sd_path)
             if os.system("udisksctl power-off --block-device "+ sd_path) == 0:
-                st.write('Ejected'+ ' ' + sd_path)
+                st.write('Ejected'+ ' ' + button_name)
                 st.write('Reload the page to see the changes.  ')
             
 
     
 if __name__ == "__main__":
     main()
-
