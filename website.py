@@ -4,7 +4,7 @@ import time
 
 dev = {}
 devs = {}
-media_path = r'/media/xmount/'
+media_path = r'/media/ruben/'
 
 def get_usb():
     i = 0
@@ -31,6 +31,7 @@ def main():
         l = st.button('Eject ' + 'Nr. '+l+' ' + button_name)
         if l:
             st.write('ejecting'+ ' ' + button_name)
+            st.write('Please wait... ')
             path = get_usb()[i+1]
             sd_path = os.popen("df -h "+path+" | grep -v 'Filesystem'").read()
             sd_path = sd_path.split(' ')[0]
