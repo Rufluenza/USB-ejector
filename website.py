@@ -3,7 +3,7 @@ import os
 
 dev = {}
 devs = {}
-media_path = r'/media/ruben/'
+media_path = r'/media/xmount/'
 
 def get_usb():
     i = 0
