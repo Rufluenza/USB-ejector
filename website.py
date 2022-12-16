@@ -35,7 +35,8 @@ def main():
             sd_path = os.popen("df -h "+path+" | grep -v 'Filesystem'").read()
             sd_path = sd_path.split(' ')[0]
             sd_path = sd_path.replace(' ', '')
-            sd_path = sd_path.replace('1' or '2' or '3' or '4' or '5' or '6' or '7' or '8' or '9' or '0', '')
+            for x in range(10):
+                sd_path = sd_path.replace(str(x), '')
             os.system("udisksctl unmount --block-device "+sd_path)
             
             for i in range(1, 7):
